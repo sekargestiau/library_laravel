@@ -17,10 +17,11 @@ class BooksFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->sentence(),
+            'title' => fake()->sentence(rand(8, 15), true),
             'author' => fake()->name(),
-            'publisher' => fake()->words(rand(5, 8), true),
+            'publisher' => fake()->word(rand(5, 8), true),
             'year' => fake()->year('+10 years'),
+            'category' => $this->faker->randomElement(['Slice Of Life', 'History', 'Science', 'Romance', 'Trilogy', 'Mystery', 'Comedy', 'Comics']),
         ];
     }
 }
