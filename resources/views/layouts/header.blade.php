@@ -1,3 +1,10 @@
+<!-- 
+Nama : Sekar Gesti Amalia Utami 
+NIM  : M0521071
+Kelas: C
+Prodi: Informatika
+
+PRAKTIKUM 10 PEMROGRAMAN WEB -->
 <div class="header">
         <nav class="navbar navbar-expand-lg fixed-top" style="background-color: rgb(244, 172, 78);" data-bs-theme="danger">
           <div class="container text-center">
@@ -19,7 +26,7 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="nav nav-tabs me-auto mb-2 mb-lg-0">
                 <li class="nav-item" style="background-color: rgb(244, 172, 78);">
-                    <a class="nav-link active" aria-current="page" href="{{url('home')}}" style="color: rgb(0, 0, 0);">Home</a>
+                    <a class="nav-link" aria-current="page" href="{{url('home')}}" style="color: rgb(0, 0, 0);">Home</a>
                   </li>
                   <!-- <li class="nav-item">
                     <a class="nav-link" href="profil.php" style="color: rgb(0, 0, 0);">Profil</a>

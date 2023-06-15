@@ -6,7 +6,7 @@ Prodi: Informatika
 
 PRAKTIKUM 10 PEMROGRAMAN WEB -->
 @extends('layouts.main')
-@section('title','Data Buku Perpustakaan MCU')
+@section('title','Pinjam Buku Perpustakaan MCU')
 
     
     @section('container')

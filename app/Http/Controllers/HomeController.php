@@ -14,11 +14,11 @@ class HomeController extends Controller
     //     return view('home.home');
     // }
 
-    public function table(){
-        $nama = "sparker";
-        $daftar_buku = ["Kucing", "Jerapah", "Bebek"];
-        return view('home.table', compact('nama', 'daftar_buku'));
-    }
+    // public function table(){
+    //     $nama = "sparker";
+    //     $daftar_buku = ["Kucing", "Jerapah", "Bebek"];
+    //     return view('home.table', compact('nama', 'daftar_buku'));
+    // }
 
     public function form(){
         return view('home.form');

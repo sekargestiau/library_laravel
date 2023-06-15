@@ -13,7 +13,7 @@ class PinjamController extends Controller
      */
     public function index()
     {
-        //
+        return view('home.form');
     }
 
     /**
@@ -31,7 +31,7 @@ class PinjamController extends Controller
     public function store(Request $request)
     {
         $model = new Pinjam;
-        $model->id_library = 1;
+        $model->id_books = 1;
         $model->nama = $request->nama;
         $model->nim = $request->nim;
         $model->prodi = $request->prodi;
