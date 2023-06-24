@@ -28,6 +28,22 @@ class BooksController extends Controller
         return view('home.books', ['books' => $books]);
     }
 
+    public function index_admin()
+    {
+        // $books = Books::latest()->get();
+        $books = Books::all();
+        // $books = Books::first()->get();
+        // $books = Books::latest()->first()->get();
+        $books = Books::latest()
+                        ->orderBy('year','asc')
+                        // ->groupBy('category')
+                        ->get();
+        // return view('home.books', compact('datas'));
+        // $books = DB::select('select * from books');
+ 
+        return view('admin.books', ['books' => $books]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\PinjamController;
+use App\Http\Controllers\AdminHomeController;
+use App\Http\Controllers\UserController;
 
 
 /*
@@ -20,7 +22,7 @@ use App\Http\Controllers\PinjamController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/', [HomeController::class, 'index']);
+// Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/home', [HomeController::class, 'index']);
 // Route::get('/home/show_home', [HomeController::class, 'show_home']);
@@ -31,3 +33,8 @@ Route::resource('/books',BooksController::class);
 Route::post('/books', [BooksController::class, 'store']);
 Route::resource('/form',PinjamController::class);
 Route::post('/form', [PinjamController::class, 'store']);
+Route::get('/admin-home', [AdminHomeController::class, 'index']);
+Route::get('/', [AdminHomeController::class, 'index']);
+Route::get('/admin-books', [BooksController::class, 'index_admin']);
+Route::get('/admin-user', [UserController::class, 'index_admin']);
+
