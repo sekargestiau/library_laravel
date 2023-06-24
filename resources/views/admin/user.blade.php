@@ -10,10 +10,25 @@ PRAKTIKUM 11 PEMROGRAMAN WEB -->
 
     
     @section('container')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="notice-section">
         <div class="container">
             <h1>Data Anggota Perpustakaan MCU</h1><br><br>
-            <button style="background-color: rgb(244, 172, 78); border-radius: 7px; border-color: rgb(244, 172, 78);"><a class="nav-link" href="add-anggota.php" style="color: rgb(0, 0, 0);">TAMBAH DATA ANGGOTA</a></button>
+            <button style="background-color: rgb(244, 172, 78); border-radius: 7px; border-color: rgb(244, 172, 78);"><a class="nav-link" href="{{ route('user-create') }}" style="color: rgb(0, 0, 0);">TAMBAH DATA ANGGOTA</a></button>
             <br><br>
             <form action="" method="post" class="d-flex" role="search">
                 <input class="form-control me-2" type="text" name="keyword" size="20" autofocus autocomplete="off" placeholder="Masukkan Keyword" aria-label="Search">
@@ -26,30 +41,34 @@ PRAKTIKUM 11 PEMROGRAMAN WEB -->
                     <table class="table table-bordered">
                         <tr align="center">
                             <td><b>No.</td>
-                            <td><b>Kode Anggota</td>
                             <td><b>Nama</td>
-                            <td><b>Alamat</td>
+                            <td><b>Email</td>
                             <td><b>Foto Diri</td>
                             <td><b>Manajemen</td>
                         </tr>
                         <tr align="center">
                             <?php $i = 1;?>
-                            <?php foreach ($member as $row): ?>
-                                <td align="center"><?= $i; ?></td>
-                                <td align="center"><?= $row["kode_member"]; ?></td>
-                                <td align="center"><?= $row["nama"]; ?></td>
-                                <td align="center"><?= $row["alamat"]; ?></td>
+                            @foreach($user as $key=>$value)
+                                <td align="center">{{ $i }}</td>
+                                <td align="center">{{ $value->name }}</td>
+                                <td align="center">{{ $value->email }}</td>
+                                <td align="center"><img src="{{ asset($value->profile_photo) }}" alt=""></td>
                                 <td align="center">
-                                    <img src="img/<?= $row["image"]; ?>" alt="none" width="80px" height="60px">
-                                </td>
-                                <td align="center">
-                                    <a href="update-anggota.php?id=<?= $row["id"]; ?>">UPDATE</a>
-                                    <a href="delete-anggota.php?id=<?= $row["id"]; ?>" onclick="return confirm('Apakah data akan dihapus?');">DELETE</a>
+                                    <!-- Delete user -->
+                                    <form action="{{ route('user.destroy', ['user' => $value->id]) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-dark">
+                                        DELETE
+                                        </button>
+                                    </form>
+                                    <!-- Update user -->
+                                        <a class="btn btn-dark" href="{{url('admin-edit-user/'.$value->id.'/edit')}}">UPDATE</a>
                                 </td>
                         </tr>
                             <?php $i++; ?>
-                            <?php endforeach; ?>
-                    </table>
+                            @endforeach                    
+                        </table>
             </div>
         
           </div>

@@ -10,10 +10,25 @@ PRAKTIKUM 11 PEMROGRAMAN WEB -->
 
     
     @section('container')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="notice-section">
         <div class="container">
             <h1>Data Buku Perpustakaan MCU</h1><br><br>
-            <button style="background-color: rgb(244, 172, 78); border-radius: 7px; border-color: rgb(244, 172, 78);"><a class="nav-link" href="add-buku.php" style="color: rgb(0, 0, 0);">TAMBAH DATA BUKU</a></button>
+            <button style="background-color: rgb(244, 172, 78); border-radius: 7px; border-color: rgb(244, 172, 78);" type="button"  style="color: rgb(0, 0, 0);"><a class="nav-link" href="{{ route('books-create') }}">TAMBAH DATA BUKU</a></button>
             <br><br>
             <form action="" method="post" class="d-flex" role="search">
                 <input class="form-control me-2" type="text" name="keyword" size="20" autofocus autocomplete="off" placeholder="Masukkan Keyword" aria-label="Search">
@@ -43,8 +58,16 @@ PRAKTIKUM 11 PEMROGRAMAN WEB -->
                                 <td align="center">{{ $value->year }}</td>
                                 <td align="center">{{ $value->category }}</td>
                                 <td align="center">
-                                    <button class="btn btn-dark"><a class="nav-link" href="update-buku.php?id=<?= $value["id"]; ?>">UPDATE</a></button>
-                                    <button class="btn btn-dark"><a class="nav-link" href="delete-buku.php?id=<?= $value["id"]; ?>" onclick="return confirm('Apakah data akan dihapus?');">DELETE</a></button>
+                                    <!-- Delete buku -->
+                                    <form action="{{ route('books.destroy', ['book' => $value->id]) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-dark">
+                                        DELETE
+                                        </button>
+                                    </form>
+                                    <!-- Update buku -->
+                                        <a class="btn btn-dark" href="{{url('admin-edit/'.$value->id.'/edit')}}">UPDATE</a>
                                 </td>
                         </tr>
                             <?php $i++; ?>

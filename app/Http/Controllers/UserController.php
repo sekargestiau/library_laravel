@@ -32,12 +32,18 @@ class UserController extends Controller
         return view('admin.user', ['user' => $user]);
     }
 
+    public function index_create()
+    {
+       
+        return view('admin.create-user');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -45,7 +51,36 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string', 'min:8'],
+            'profile_photo' => ['nullable'],
+        ]);
+
+        // send error message
+        if (!$validated) {
+            return redirect()->back()->with('error', 'Validation failed!');
+        }
+
+        if($request->file('profile_photo')) {
+            $fileName = time().'_'.$request->file('profile_photo')->getClientOriginalName();
+            $request->file('profile_photo')->move(public_path('profile_photo'), $fileName);
+            $filePath = 'profile_photo/'.$fileName;
+
+            $validated['profile_photo'] = $filePath;
+        }
+
+        // create user
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+            'profile_photo' => $validated['profile_photo'],
+        ]);
+
+        // send success message
+        return redirect('admin-user')->with('success', 'User created!');
     }
 
     /**
@@ -61,15 +96,24 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $model = User::find($id);
+        return view('admin.edit-user', compact('model'));
     }
 
-    /**
+    /*
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        
+        $model = User::find($id);
+        $model->name = $request->name;
+        $model->email = $request->email;
+        $model->password = $request->password;
+        $model->profile_photo = $request->profile_photo;
+        $model->save();
+
+        return redirect('admin-user')->with('success', 'Data Buku Berhasil Diperbarui!');
     }
 
     /**
@@ -77,6 +121,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        User::findOrFail($id)->delete();
+
+        return redirect('admin-user')->with('success', 'User Berhasil Dihapus!');
     }
 }

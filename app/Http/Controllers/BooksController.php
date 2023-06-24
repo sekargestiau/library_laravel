@@ -52,6 +52,7 @@ class BooksController extends Controller
         $model = new Books;
         return view('home.create', compact('model'));
     }
+    
 
     /**
      * Store a newly created resource in storage.
